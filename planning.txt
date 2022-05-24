@@ -1,0 +1,16 @@
+Planning out Quizzical
+
+Components:
+
+- Splash
+- Quiz Page
+	- Quiz questions
+	- Quiz answers
+
+useState:
+- SelectedAnswers, could be objects representing question # (or ID?) and selected answer ID
+- isGraded
+
+useEffect:
+- may have to use when grading? since we're comparing two states
+- pulling in new questions from API
