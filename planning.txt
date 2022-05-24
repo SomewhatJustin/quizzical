@@ -2,15 +2,20 @@ Planning out Quizzical
 
 Components:
 
-- Splash
-- Quiz Page
-	- Quiz questions
-	- Quiz answers
+- Splash (isStarted is false)
+- Quiz Page (displays if isStarted is true)
+	- Quiz questions (isStarted is true)
+	- Quiz answers (isStarted is true)
 
 useState:
 - SelectedAnswers, could be objects representing question # (or ID?) and selected answer ID
 - isGraded
+- isStarted
+- questions
 
 useEffect:
 - may have to use when grading? since we're comparing two states
 - pulling in new questions from API
+
+Notes:
+- may have to do some useEffect cleanup?

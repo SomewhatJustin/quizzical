@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function Answer() {
+export default function Answers(props) {
 	return (
-		<h2>quiz answer!</h2>
+		<h2>{props.correct_answer}</h2>
 	)
 }

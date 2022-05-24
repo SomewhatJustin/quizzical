@@ -1,7 +1,8 @@
 import React from 'react'
 
-export default function Question() {
+export default function Question(props) {
+	const questionId = props.questionId
 	return (
-		<h2>quiz question?</h2>
+		<h2>{props.question}</h2>
 	)
 }
