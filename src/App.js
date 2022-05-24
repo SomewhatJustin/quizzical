@@ -7,8 +7,8 @@ import React from 'react'
 function App() {
   
   // Set up State
-  const [isStarted, setIsStarted] = React.useState("false") // has the user started the game?
-  const [isGraded, setIsGraded] = React.useState("false") // has the quiz been graded?
+  const [isStarted, setIsStarted] = React.useState(false) // has the user started the game?
+  const [isGraded, setIsGraded] = React.useState(false) // has the quiz been graded?
   const [quizData, setQuizData] = React.useState(getQuizData()) // quiz data from API
   const [selectedAnswers, SetSelectedAnswers] = React.useState([]) // which answers are currently selected?
   
@@ -22,12 +22,19 @@ function App() {
     return data.results
   }
   
-  
+  // Toggle a state
+  function toggle(state) {
+    if (state = "isStarted") {
+      setIsStarted(old => !old) 
+    }
+  }
+
   
   return (
     <div className="App">
-      <Splash />
-      <Quiz />
+      {!isStarted && <Splash 
+                      toggle={() => toggle("isStarted")}/>}
+      {isStarted && <Quiz />}
     </div>
   );
 }
