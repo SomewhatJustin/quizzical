@@ -16,19 +16,27 @@ export default function singleAnswer(props) {
   // if yes, see if this answer id is in there
   // console.log(selectedAnswers.find(item => item.question = questionId))
 
+  // Conditional classes
+  let answerClass = "answer"
+
+  if (!props.isGraded) {
+    answerClass += isSelected ? " selected" : " not-selected"
+  } else if (props.isGraded) {
+    if (isSelected) {
+      answerClass = props.isCorrect ? "right-answer" : "wrong-answer"
+    } else if (!isSelected && props.isCorrect) {
+      answerClass += " missed-answer"
+    }
+  }
+
   return (
     <>
       <p
         onClick={() => props.selectAnswer(questionId, answerId)}
-        className={isSelected ? "selected" : "not-selected"}
+        className={answerClass}
       >
         {props.text}
       </p>
-      {props.isGraded && isSelected && props.isCorrect ? (
-        <small>you were rite</small>
-      ) : (
-        <></>
-      )}
     </>
   )
 }

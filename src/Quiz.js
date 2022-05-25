@@ -2,11 +2,13 @@ import React from "react"
 import Question from "./Question"
 import Answers from "./Answers"
 import { nanoid } from "nanoid"
+import he from "he"
 
 export default function Quiz(props) {
   const [selectedAnswers, setSelectedAnswers] = React.useState([]) // which answers are currently selected?
   const [quizData, setQuizData] = React.useState([]) // we'll add state to this in a useEffect function
   const [isGraded, setIsGraded] = React.useState(false) // has the quiz been graded?
+  const [numCorrectAnswers, setNumCorrectAnswers] = React.useState(0)
 
   // Get quiz data from API
   React.useEffect(() => {
@@ -20,15 +22,18 @@ export default function Quiz(props) {
       const QandA = []
       for (let i = 0; i < (await data.results.length); i++) {
         let incorrectAnswers = data.results[i].incorrect_answers.map(
-          (item) => ({ value: item, id: nanoid() })
+          (item) => ({ value: he.decode(item), id: nanoid() })
         )
         const correctIndex = Math.ceil(Math.random() * 4)
 
         QandA.push({
           ...data.results[i],
-          question: { value: data.results[i].question, id: nanoid() },
+          question: {
+            value: he.decode(data.results[i].question),
+            id: nanoid(),
+          },
           correct_answer: {
-            value: data.results[i].correct_answer,
+            value: he.decode(data.results[i].correct_answer),
             id: nanoid(),
           },
           incorrect_answers: incorrectAnswers,
@@ -48,8 +53,6 @@ export default function Quiz(props) {
       return
     }
 
-    console.log(questionId)
-
     let newArr = []
 
     if (newArr.find((pair) => pair.question === questionId)) {
@@ -67,14 +70,26 @@ export default function Quiz(props) {
 
   // Grade the Quiz
   function grade() {
-    if (selectedAnswers.length < 5) {
+    // Don't grade if they haven't completed the quiz
+    if (selectedAnswers.length < quizData.length) {
       return
     }
 
-    setIsGraded((old) => !old)
+    setIsGraded(true)
 
-    console.log(selectedAnswers)
-    console.log(quizData[0].correct_answer)
+    // calculate # of correct answers
+    // get list of selected answers
+    // get list of correct answers
+    // see how many matches there are by iterating over one list and comparing to the other each time
+
+    let correctAnswers = quizData.map((item) => item.correct_answer.id)
+    let finalSelections = selectedAnswers.map((item) => item.answer)
+    console.log(finalSelections)
+    for (let i = 0; i < quizData.length; i++) {
+      if (correctAnswers.includes(finalSelections[i])) {
+        setNumCorrectAnswers((old) => old + 1)
+      }
+    }
   }
 
   // Start the quiz over
@@ -111,14 +126,17 @@ export default function Quiz(props) {
     return elements
   }
 
-  quesAns()
-
   return (
     <main>
       <h1>Quiz!</h1>
       {quesAns()}
       {!isGraded && <button onClick={grade}>Grade it</button>}
       {isGraded && <button onClick={playAgain}>Play Again</button>}
+      {isGraded && (
+        <p>
+          You got {numCorrectAnswers}/{quizData.length} correct
+        </p>
+      )}
     </main>
   )
 }
