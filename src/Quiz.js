@@ -1,28 +1,28 @@
-import React from "react";
-import Question from "./Question";
-import Answers from "./Answers";
-import { nanoid } from "nanoid";
+import React from "react"
+import Question from "./Question"
+import Answers from "./Answers"
+import { nanoid } from "nanoid"
 
 export default function Quiz(props) {
-  const [selectedAnswers, setSelectedAnswers] = React.useState([]); // which answers are currently selected?
-  const [quizData, setQuizData] = React.useState([]); // we'll add state to this in a useEffect function
-  const [isGraded, setIsGraded] = React.useState(false); // has the quiz been graded?
+  const [selectedAnswers, setSelectedAnswers] = React.useState([]) // which answers are currently selected?
+  const [quizData, setQuizData] = React.useState([]) // we'll add state to this in a useEffect function
+  const [isGraded, setIsGraded] = React.useState(false) // has the quiz been graded?
 
   // Get quiz data from API
   React.useEffect(() => {
-    console.log("running useEffect");
+    console.log("running useEffect")
     const getQuizData = async () => {
       const res = await fetch(
         "https://opentdb.com/api.php?amount=5&type=multiple"
-      );
-      const data = await res.json();
+      )
+      const data = await res.json()
 
-      const QandA = [];
+      const QandA = []
       for (let i = 0; i < (await data.results.length); i++) {
         let incorrectAnswers = data.results[i].incorrect_answers.map(
           (item) => ({ value: item, id: nanoid() })
-        );
-        const correctIndex = Math.ceil(Math.random() * 4);
+        )
+        const correctIndex = Math.ceil(Math.random() * 4)
 
         QandA.push({
           ...data.results[i],
@@ -33,68 +33,68 @@ export default function Quiz(props) {
           },
           incorrect_answers: incorrectAnswers,
           correctIndex: correctIndex,
-        });
+        })
       }
 
-      setQuizData(QandA);
-    };
+      setQuizData(QandA)
+    }
 
-    getQuizData().catch(console.error);
-  }, [props.isGraded]);
+    getQuizData().catch(console.error)
+  }, [props.isGraded])
 
   // Select an answer
   function selectAnswer(questionId, answerId) {
     if (isGraded) {
-      return;
+      return
     }
 
-    console.log(questionId);
+    console.log(questionId)
 
-    let newArr = [];
+    let newArr = []
 
     if (newArr.find((pair) => pair.question === questionId)) {
-      let indexAt = newArr.findIndex((pair) => pair.question === questionId);
-      newArr.splice(indexAt, 1, { question: questionId, answer: answerId });
+      let indexAt = newArr.findIndex((pair) => pair.question === questionId)
+      newArr.splice(indexAt, 1, { question: questionId, answer: answerId })
     } else {
-      newArr.push({ question: questionId, answer: answerId });
+      newArr.push({ question: questionId, answer: answerId })
     }
 
     setSelectedAnswers((prevArray) => [
       ...prevArray.filter((item) => item.question !== questionId),
       { question: questionId, answer: answerId },
-    ]);
+    ])
   }
 
   // Grade the Quiz
   function grade() {
     if (selectedAnswers.length < 5) {
-      return;
+      return
     }
 
-    setIsGraded((old) => !old);
+    setIsGraded((old) => !old)
 
-    console.log(selectedAnswers);
-    console.log(quizData[0].correct_answer);
+    console.log(selectedAnswers)
+    console.log(quizData[0].correct_answer)
   }
 
   // Start the quiz over
   function playAgain() {
-    setIsGraded(false);
-    props.setIsStarted(false);
+    setIsGraded(false)
+    props.setIsStarted(false)
   }
 
   // Create Question and Answer Elements
   const quesAns = () => {
-    let elements = [];
+    let elements = []
     for (let i = 0; i < quizData.length; i++) {
-      const id = nanoid();
+      const id = nanoid()
       elements.push(
         <Question
           key={nanoid()}
           questionId={quizData[i].question.id}
           question={quizData[i].question.value}
         />
-      );
+      )
       elements.push(
         <Answers
           key={nanoid()}
@@ -106,12 +106,12 @@ export default function Quiz(props) {
           selectAnswer={selectAnswer}
           isGraded={isGraded}
         />
-      );
+      )
     }
-    return elements;
-  };
+    return elements
+  }
 
-  quesAns();
+  quesAns()
 
   return (
     <main>
@@ -120,5 +120,5 @@ export default function Quiz(props) {
       {!isGraded && <button onClick={grade}>Grade it</button>}
       {isGraded && <button onClick={playAgain}>Play Again</button>}
     </main>
-  );
+  )
 }

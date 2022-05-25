@@ -1,14 +1,14 @@
-import React from "react";
+import React from "react"
 
 export default function singleAnswer(props) {
-  const questionId = props.questionId;
-  const answerId = props.answerId;
+  const questionId = props.questionId
+  const answerId = props.answerId
 
   // See if this answer has been selected
-  let isSelected = false;
+  let isSelected = false
   isSelected = props.selectedAnswers
     .map((item) => item.answer)
-    .includes(answerId);
+    .includes(answerId)
 
   //console.log(props.selectedAnswers.find(item => item.question === questionId))
 
@@ -30,5 +30,5 @@ export default function singleAnswer(props) {
         <></>
       )}
     </>
-  );
+  )
 }
