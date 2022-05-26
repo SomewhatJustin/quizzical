@@ -43,6 +43,10 @@ button {
 
 /* QUIZ */
 
+main {
+  padding: 5px 15px;
+}
+
 .quiz {
   margin-bottom: 20px;
   margin-top: 50px;
