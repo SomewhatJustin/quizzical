@@ -1,18 +1,18 @@
-import React from "react";
-import SingleAnswer from "./SingleAnswer";
-import { nanoid } from "nanoid";
+import React from "react"
+import SingleAnswer from "./SingleAnswer"
+import { nanoid } from "nanoid"
 
 export default function Answers(props) {
   // Generate a list of answers. Mark the correct one.
   const allAnswers = () => {
-    let answersArray = [];
+    let answersArray = []
 
     // Add the correct answer
     answersArray.push({
       text: props.correct_answer.value,
       isCorrect: true,
       id: props.correct_answer.id,
-    });
+    })
 
     // Add the incorrect answers
     for (let i = 0; i < props.incorrect_answers.length; i++) {
@@ -20,13 +20,13 @@ export default function Answers(props) {
         text: props.incorrect_answers[i].value,
         isCorrect: false,
         id: props.incorrect_answers[i].id,
-      });
+      })
     }
 
     // Array of JSX
-    let answersJSX = [];
+    let answersJSX = []
     for (let j = 0; j < answersArray.length; j++) {
-      let id = nanoid();
+      let id = nanoid()
       answersJSX.push(
         <SingleAnswer
           key={id}
@@ -38,17 +38,17 @@ export default function Answers(props) {
           selectedAnswers={props.selectedAnswers} // state
           isGraded={props.isGraded}
         />
-      );
+      )
     }
     // Randomize order of answers
-    const correctIndex = props.correctIndex;
-    const correctAnswer = answersJSX[0];
+    const correctIndex = props.correctIndex
+    const correctAnswer = answersJSX[0]
 
-    answersJSX.splice(correctIndex, 0, correctAnswer);
-    answersJSX.shift();
+    answersJSX.splice(correctIndex, 0, correctAnswer)
+    answersJSX.shift()
 
-    return answersJSX;
-  };
+    return answersJSX
+  }
 
-  return <>{allAnswers()}</>;
+  return <div className="answers-container">{allAnswers()}</div>
 }

@@ -1,14 +1,14 @@
-import React from "react";
+import React from "react"
 
 export default function singleAnswer(props) {
-  const questionId = props.questionId;
-  const answerId = props.answerId;
+  const questionId = props.questionId
+  const answerId = props.answerId
 
   // See if this answer has been selected
-  let isSelected = false;
+  let isSelected = false
   isSelected = props.selectedAnswers
     .map((item) => item.answer)
-    .includes(answerId);
+    .includes(answerId)
 
   //console.log(props.selectedAnswers.find(item => item.question === questionId))
 
@@ -16,19 +16,27 @@ export default function singleAnswer(props) {
   // if yes, see if this answer id is in there
   // console.log(selectedAnswers.find(item => item.question = questionId))
 
+  // Conditional classes
+  let answerClass = "answer"
+
+  if (!props.isGraded) {
+    answerClass += isSelected ? " selected" : " not-selected"
+  } else if (props.isGraded) {
+    if (isSelected) {
+      answerClass = props.isCorrect ? "right-answer" : "wrong-answer"
+    } else if (!isSelected && props.isCorrect) {
+      answerClass += " missed-answer"
+    }
+  }
+
   return (
     <>
-      <p
+      <span
         onClick={() => props.selectAnswer(questionId, answerId)}
-        className={isSelected ? "selected" : "not-selected"}
+        className={answerClass}
       >
         {props.text}
-      </p>
-      {props.isGraded && isSelected && props.isCorrect ? (
-        <small>you were rite</small>
-      ) : (
-        <></>
-      )}
+      </span>
     </>
-  );
+  )
 }

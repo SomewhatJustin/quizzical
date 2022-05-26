@@ -1,42 +1,112 @@
+/* BASE */
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  margin: 0;
+  font-family: "Karla", sans-serif;
+  overflow: auto;
+  background: #f5f7fb;
+  background: no-repeat 0% 100% url("./img/blue-blob.png"),
+    no-repeat 100% 0% url("./img/yellow-blob.png");
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 100vh;
+}
+
+button {
+  background: #4d5b9e;
+  border-radius: 15px;
   color: white;
+  border: none;
+  font-size: 1rem;
+  padding: 20px 50px;
+  font-family: "Karla", sans-serif;
 }
 
-.App-link {
-  color: #61dafb;
+/* SPLASH */
+.App .splash {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App .splash h1 {
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 37px;
+  text-align: center;
+  color: #293264;
 }
 
-.selected {
-  background: blue;
+/* QUIZ */
+
+.quiz {
+  margin-bottom: 20px;
+  margin-top: 50px;
+  width: 98%;
+  max-width: 700px;
+  text-align: left;
+}
+
+main .quiz h2 {
+  color: #293264;
+}
+
+.end-quiz {
+  margin-bottom: 30px;
+}
+
+/* ANSWERS */
+.answers-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #dbdef0;
+  padding-bottom: 10px;
+}
+
+main .answers-container span {
+  margin: 10px 14px 10px 0px;
+  padding: 5px 12px;
+  border: 1px solid #4d5b9e;
+  border-radius: 8px;
+  color: #293264;
+}
+
+.answers-container .selected {
+  background: #d6dbf5;
+  border: 1px solid #d6dbf5;
+}
+
+.answers-container .not-selected {
+  background: transparent;
+}
+
+.answers-container .right-answer,
+.answers-container .missed-answer {
+  background: #94d7a2;
+  border: 1px solid #94d7a2;
+}
+
+.answers-container .wrong-answer {
+  background: #f8bcbc;
+  border: 1px solid #f8bcbc;
+  color: #293264;
+}
+
+/* GRADED */
+.play-again-btn {
+  padding: 10px 30px;
+}
+
+.correct-count {
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 15px;
+  text-align: center;
+  margin-right: 20px;
+  color: #293264;
 }
