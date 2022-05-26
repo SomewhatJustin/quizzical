@@ -128,15 +128,20 @@ export default function Quiz(props) {
 
   return (
     <main>
-      <h1>Quiz!</h1>
-      {quesAns()}
-      {!isGraded && <button onClick={grade}>Grade it</button>}
-      {isGraded && <button onClick={playAgain}>Play Again</button>}
-      {isGraded && (
-        <p>
-          You got {numCorrectAnswers}/{quizData.length} correct
-        </p>
-      )}
+      <div className="quiz">{quesAns()}</div>
+      <div className="end-quiz">
+        {!isGraded && <button onClick={grade}>Grade it</button>}
+        {isGraded && (
+          <span className="correct-count">
+            You got {numCorrectAnswers}/{quizData.length} correct
+          </span>
+        )}
+        {isGraded && (
+          <button className="play-again-btn" onClick={playAgain}>
+            Play Again
+          </button>
+        )}
+      </div>
     </main>
   )
 }

@@ -50,5 +50,5 @@ export default function Answers(props) {
     return answersJSX
   }
 
-  return <>{allAnswers()}</>
+  return <div className="answers-container">{allAnswers()}</div>
 }

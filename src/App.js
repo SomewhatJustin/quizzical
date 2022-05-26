@@ -1,4 +1,5 @@
-import logo from "./logo.svg"
+// import logo from "./logo.svg"
+// import blueBlob from "./img/blue-blob.png"
 import "./App.css"
 import Splash from "./Splash"
 import Quiz from "./Quiz"

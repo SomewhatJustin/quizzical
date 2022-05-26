@@ -31,12 +31,12 @@ export default function singleAnswer(props) {
 
   return (
     <>
-      <p
+      <span
         onClick={() => props.selectAnswer(questionId, answerId)}
         className={answerClass}
       >
         {props.text}
-      </p>
+      </span>
     </>
   )
 }
